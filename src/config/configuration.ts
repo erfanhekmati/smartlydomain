@@ -11,4 +11,7 @@ export default () => ({
   mongo: {
     connection: { url: process.env.MONGO_CONN_URL },
   },
+  openai: {
+    apiKey: process.env.OPENAI_API_KEY,
+  },
 });

@@ -1,10 +1,17 @@
 import * as dns from 'node:dns';
 import { Injectable } from '@nestjs/common';
 import { DomainCheckAvailabilityResult } from './types';
+import { OpenaiService } from 'src/openai/openai.service';
 
 @Injectable()
 export class DomainService {
-  constructor() {}
+  constructor(private readonly openaiService: OpenaiService) {}
+
+  public async suggestDomains(description: string) {
+    const domainNames =
+      await this.openaiService.generateDomainNames(description);
+    return await this.checkDomainsAvailability(domainNames);
+  }
 
   public async suggestFakeDomains() {
     const domainNames = await this.getFakeDomainNames();

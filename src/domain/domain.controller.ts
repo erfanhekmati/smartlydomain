@@ -1,6 +1,7 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { DomainService } from './domain.service';
+import { SuggestDomainDto } from './dtos';
 
 @ApiTags('Domain')
 @ApiBearerAuth()
@@ -10,7 +11,13 @@ export class DomainController {
 
   @Post('suggest-fake')
   @ApiOperation({ summary: 'Returns fake domain suggestions' })
-  public async suggest() {
+  public async suggestFake() {
     return await this.domainService.suggestFakeDomains();
+  }
+
+  @Post('suggest')
+  @ApiOperation({ summary: 'Returns domain suggestions for descriptipn' })
+  public async suggest(@Body() { description }: SuggestDomainDto) {
+    return await this.domainService.suggestDomains(description);
   }
 }

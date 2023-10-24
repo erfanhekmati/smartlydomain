@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/configuration';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DomainModule } from './domain/domain.module';
+import { OpenaiModule } from './openai/openai.module';
 
 
 @Module({
@@ -20,7 +21,8 @@ import { DomainModule } from './domain/domain.module';
       }),
       inject: [ConfigService],
     }),
-    DomainModule
+    DomainModule,
+    OpenaiModule
   ],
   controllers: [
     AppController
