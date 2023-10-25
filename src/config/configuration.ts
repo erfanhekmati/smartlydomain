@@ -2,6 +2,7 @@ export default () => ({
   app: {
     port: parseInt(process.env.PORT, 10) || 3000,
     version: '1.0.0',
+    apiKeys: process.env.API_KEYS?.split(','),
   },
   swagger: {
     title: 'SmartlyDomain API Documentation',

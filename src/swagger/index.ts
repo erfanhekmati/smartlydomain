@@ -11,6 +11,7 @@ export function SwaggerIntialize(app: INestApplication<any>) {
     .setTitle(configService.get('swagger.title'))
     .setDescription(configService.get('swagger.description'))
     .setVersion(configService.get('app.version'))
+    .addBearerAuth()
     .build();
 
   // Building swagger document
