@@ -6,13 +6,14 @@ import configuration from './config/configuration';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DomainModule } from './domain/domain.module';
 import { OpenaiModule } from './openai/openai.module';
-
+import { APP_GUARD } from '@nestjs/core';
+import { ApiKeyGuard } from './common/guards';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       load: [configuration],
-      isGlobal: true
+      isGlobal: true,
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -22,13 +23,15 @@ import { OpenaiModule } from './openai/openai.module';
       inject: [ConfigService],
     }),
     DomainModule,
-    OpenaiModule
+    OpenaiModule,
   ],
-  controllers: [
-    AppController
-  ],
+  controllers: [AppController],
   providers: [
-    AppService
+    {
+      provide: APP_GUARD,
+      useClass: ApiKeyGuard,
+    },
+    AppService,
   ],
 })
 export class AppModule {}
